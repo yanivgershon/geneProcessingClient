@@ -1,0 +1,45 @@
+<p>choose a file to upload</p>
+<!--<angular-file-uploader
+      [config]="afuConfig">
+</angular-file-uploader>-->
+<!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".xls,.xlsx,.csv">-->
+
+
+<div class="row" style="margin-bottom:15px;">
+  <div class="col-md-3">
+    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;" multiple>
+    <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
+  </div>
+  <div class="col-md-4">
+    <span class="upload" *ngIf="progress > 0">
+      {{progress}}%
+    </span>
+    <span class="upload" *ngIf="message">
+      {{message}}
+    </span>
+  </div>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="geneName">
+    <th mat-header-cell *matHeaderCellDef> Gene Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.geneName}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Result">
+    <th mat-header-cell *matHeaderCellDef> Result </th>
+    <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+
