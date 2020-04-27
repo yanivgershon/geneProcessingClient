@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient ,HttpHeaders, HttpEventType } from '@angular/common/http';
 import { Globals } from './../globals';
@@ -11,6 +11,7 @@ import { Globals } from './../globals';
 })
 export class UploadCsvComponent implements OnInit {
   // tslint:disable-next-line: no-output-on-prefix
+@ViewChild('inputFile') inputFile: ElementRef;
   @Output() public onUploadFinished = new EventEmitter();
   public progress: number;
   public message: string;
@@ -41,14 +42,14 @@ export class UploadCsvComponent implements OnInit {
     if (files.length === 0) {
       return;
     }
-
+    this.dataSource=[];
     const fileToUpload = files[0] as File;
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
 
-     const path='https://localhost:5001/api/upload';
+    // const path='https://localhost:5001/api/upload';
     //const path = 'http://localhost:44331/api/UploadCsv';
-    //const path =`${Globals.baseUrl}UploadCsv`;
+    const path =`${Globals.baseUrl}Upload`;
     this.http.post<any[]>(path, formData, {reportProgress: true, observe: 'events'})
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -58,6 +59,7 @@ export class UploadCsvComponent implements OnInit {
           this.message = 'Upload success.';
 
           this.dataSource=event.body;
+          this.inputFile.nativeElement.value = "";
           //this.onUploadFinished.emit(event.body);
         }
       });

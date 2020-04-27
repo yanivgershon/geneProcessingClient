@@ -1,4 +1,4 @@
 export class Globals {
-  //public static baseUrl = 'https://localhost:53990/api/';
-  public static baseUrl = 'http://geneprocessingserver.azurewebsites.net/api/';
+  //public static baseUrl = 'http://localhost:53990/api/';
+  public static baseUrl = 'https://geneprocessingserver.azurewebsites.net/api/';
 }
